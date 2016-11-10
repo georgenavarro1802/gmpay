@@ -1,0 +1,196 @@
+{% extends "base.html" %}
+{% load humanize %}
+
+{% block heading %}
+
+    <script>
+        $(function() {
+            fix_spaces = function(s) {
+                return s.replace(/ /g,"_");
+            };
+
+            $('.popup').click(function() {
+                var NWin = window.open($(this).prop('href'), '', 'height=600,width=600');
+                if (window.focus) {
+                    NWin.focus();
+                }
+                return false;
+            });
+
+            $("#valor").floats({"prefix":"$"});
+
+            $("#crearenlace").click(function() {
+                var v = parseFloat($.fn.floats.simplify_fn($("#valor").val(), {"prefix":"$"}));
+                var descr = $("#descripcion").val().trim();
+                if (v && descr) {
+                    var valor = Big($.fn.floats.simplify_fn($("#valor").val(), {"prefix":"$"}));
+                    $.post("/panel",
+                            {
+                                "valor":valor.toFixed(2),
+                                "descripcion": descr,
+                                'csrfmiddlewaretoken':$("input[name=csrfmiddlewaretoken]").val()
+                            },
+                            function(data) {
+                                var url = data.url;
+                                $("#enlaceurl").val(url);
+                                $("#qrcode img").attr("src","http://chart.apis.google.com/chart?cht=qr&chs=350x350&chld=L&choe=UTF-8&chl="+url);
+                                $("#qrcode a").attr("href", "http://chart.apis.google.com/chart?cht=qr&chs=350x350&chld=L&choe=UTF-8&chl="+url).removeClass("hidden");
+                                $("#twitterlink").attr("href","http://twitter.com/home?status="+url);
+
+                            }, "json");
+
+                } else {
+                    $("#enlaceurl").val("");
+                    $("#qrcode a").attr("href", "#").addClass("hidden");
+                    $("#qrcode img").attr("src","/static/img/qrcode.png");
+                    $("#twitterlink").attr("href","#");
+                    $("#alerta").show();
+
+                }
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block panelusuario %}
+    {% if cliente %}
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="#" class="clearpadding"><img src="http://www.gravatar.com/avatar/{{ cliente.gravatar }}?s=45&d=mm" class="img-circle"/></a></li>
+            <li><a href="/perfil">{{ cliente.usuario.get_full_name }} <span class="label label-info">{{ cliente.vendedor }}</span></a></li>
+            <li><a href="/logout"><i class="fa fa-power-off"></i> Salir</a></li>
+        </ul>
+    {% endif %}
+{% endblock %}
+
+{% block contenido %}
+
+    <div class="row spaceuphalf">
+        <div class="col-lg-12 col-md-12 areaderecha">
+            <div class="row">
+                <div class="col-lg-6 col-md-6">
+                    <h2><i class="fa fa-arrow-up" style="color: red;"></i> Pagos</h2>
+                    <table class="table table-responsive table-hover">
+                        <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th class="text-right">Valor</th>
+                            <th>Concepto</th>
+                            <th>Vendedor</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for pago in cliente.pagos_realizados %}
+                            <tr>
+                                <td>{{ pago.fecha|date:"d-m-Y" }}</td>
+                                <td class="text-right">${{ pago.operacion.valor|floatformat:2|intcomma }}</td>
+                                <td>{{ pago.operacion.descripcion }}</td>
+                                <td>{{ pago.operacion.cliente }}</td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="4" class="text-center">
+                                    NO HAY PAGOS
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    {% if cliente.muchos_pagos %}
+                        <a href="/pagos">Ver pagos...</a>
+                    {% endif %}
+                </div>
+
+                <div class="col-lg-6 col-md-6">
+                    <h2 class="text-right">Cobros <i class="fa fa-arrow-down" style="color: green;"></i></h2>
+                    <table class="table table-responsive table-hover">
+                        <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th class="text-right">Valor</th>
+                            <th>Concepto</th>
+                            <th>Comprador</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for cobro in cliente.cobros_realizados %}
+                            <tr>
+                                <td>{{ cobro.fecha|date:"d-m-Y" }}</td>
+                                <td class="text-right">${{ cobro.pagado|floatformat:2|intcomma }}</td>
+                                <td>{{ cobro.operacion.descripcion }}</td>
+                                <td>{{ cobro.comprador }}</td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="4" class="text-center">
+                                    NO HAY COBROS
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    {% if cliente.muchos_cobros %}
+                        <a href="/cobros">Ver cobros...</a>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="row spaceupbig">
+                <div class="col-lg-12 col-md-12 crearenlace">
+                    <div id="alerta" class="alert alert-danger alert-dismissible" role="alert" style="display: none;">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        Debe llenar todos los campos del formulario
+                    </div>
+                    <div class="col-lg-9 col-md-9">
+                        <h3><i class="fa fa-plus-circle" style="color: orange;"></i> Crear un Enlace de Pago</h3>
+                        <p class="text-muted">
+                            Un Enlace de Pago es un enlace web que habilita al que lo abre a pagar el valor establecido por el concepto determinado.
+                            Puede enviarse a trav&eacute;s de correo electr&oacute;nico o Twitter
+                        </p>
+                    </div>
+                    <div class="col-lg-3 col-md-3">
+                        <div class="saldo text-right">
+                            ${{ cliente.saldo|floatformat:2|intcomma }}
+                        </div>
+                        <div class="saldodecuenta text-right">Saldo de cuenta</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row spaceuphalf">
+                <div class="col-lg-12 col-md-12">
+                    <div class="col-lg-3 col-md-3">
+                        {% csrf_token %}
+                        <label>Valor</label>
+                        <input type="text" class="form-control" id="valor" placeholder="Valor">
+                    </div>
+                    <div class="col-lg-6 col-md-9">
+                        <label>Concepto</label>
+                        <input type="text" class="form-control" id="descripcion" placeholder="Concepto">
+                    </div>
+                    <div class="col-lg-3 col-md-3">
+                        <label>&nbsp;</label>
+                        <button class="btn btn-sm btn-success form-control" id="crearenlace">
+                            Crear Enlace de Pago
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="row spaceuphalf">
+                <div class="col-lg-9 col-md-9">
+                    <label>C&oacute;digo HTML</label>
+                    <textarea placeholder="Enlace de Pago" class="form-control codigoenlace" id='enlaceurl' rows="2">http://{{ request.get_host }}/...</textarea>
+                    <p class="text-muted">
+                        <a href="#" id="twitterlink" class="popup" target="_blank"><i class="fa fa-twitter-square"></i> Twitter</a>
+                    </p>
+                </div>
+                <div class="col-lg-3 col-md-3 text-center" id="qrcode">
+                    <img src="/static/img/qrcode.png"/>
+                    <br/>
+                    <a href="#" target="_blank" class="hidden">Descargar C&oacute;digo QR</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br/>
+{% endblock %}

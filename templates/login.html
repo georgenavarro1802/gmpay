@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block navbar %}
+
+{% endblock %}
+
+{% block contenido %}
+    <form class="form-signin" action="/login" method="POST">
+        {% csrf_token %}
+        <div class="text-center">
+            <h2><a href="/"><img src="/static/img/pay.gif" width="200" height="200"/></a></h2>
+        </div>
+        {% if next %}
+            <input type="hidden" name="next" value="{{ next }}"/>
+        {% endif %}
+        <input type="text" class="form-control" name="usuario" placeholder="Correo"/><br/>
+        <input type="password" class="form-control" name="clave" placeholder="Clave"/>
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit"> Entrar</button>
+        <a href="/olvido" class="btn btn-link">Olvid&eacute; mis credenciales</a>
+        {% if messages %}
+            {% for message in messages %}
+                {% ifequal message.tags "error" %}
+                    <div class="alert alert-danger">{{ message }}</div>
+                {% endifequal %}
+            {% endfor %}
+        {% endif %}
+    </form>
+
+{% endblock %}

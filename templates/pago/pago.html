@@ -1,0 +1,201 @@
+{% extends "panel.html" %}
+{% load humanize %}
+
+{% block contenido %}
+    <div class="row">
+        <div class="col-lg-12">
+            {% if cliente %}
+                {% if messages %}
+                    {% for message in messages %}
+                        {% ifequal message.tags "error" %}
+                            <div class="alert alert-danger spaceuphalf">{{ message }}</div>
+                        {% endifequal %}
+                    {% endfor %}
+                {% endif %}
+            {% endif %}
+            <h3>Resumen de Orden</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6 col-md-6 comprobante">
+            <h4 class="titulovendedor"><i class="fa fa-calendar"></i> {{ operacion.fecha|date:"d-m-Y" }}</h4>
+            <div class="row">
+                <div class="col-lg-6 col-md-6">
+                    <div class="info">
+                        {{ operacion.cliente }}
+                    </div>
+                    <div class="saldodecuenta">Vendedor</div>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <div class="info">
+                        {{ operacion.cliente.tipoidentificacion }}: {{ operacion.cliente.identificacion }}
+                    </div>
+                    <div class="saldodecuenta">Identificaci&oacute;n</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12">
+                    <div class="info">
+                        {{ operacion.cliente.email }}
+                    </div>
+                    <div class="saldodecuenta">Correo Electr&oacute;nico</div>
+                </div>
+            </div>
+
+            <table class="table table-hover spaceuphalf" id="resumenpago">
+                <thead>
+                <tr>
+                    <th>Descripci&oacute;n</th>
+                    <th class="text-right">Valor</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>{{ operacion.descripcion }}</td>
+                    <td class="text-right">${{ operacion.valor|floatformat:2|intcomma }}</td>
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td class="text-right">Total</td>
+                    <td class="text-right">${{ operacion.valor|floatformat:2|intcomma }}</td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+
+        <div class="col-lg-6 col-md-6">
+            {% if not cliente %}
+                <h4 class="titulocomprador">Debe tener una cuenta GM PAY para realizar el Pago</h4>
+                <div class="row spaceuphalf">
+                    <div class="col-lg-6 col-md-6">
+                        <form class="" action="/login" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="next" value="/{{ operacion.weburl }}"/>
+                            <p>
+                                <label>Usuario</label>
+                                <input type="text" class="form-control" name="usuario" placeholder="Correo"/>
+                            </p>
+                            <p>
+                                <label>Contrase&ntilde;a</label>
+                                <input type="password" class="form-control" name="clave" placeholder="Clave"/>
+                            </p>
+
+                            <button class="btn btn-primary" type="submit">Entrar</button>
+                        </form>
+                    </div>
+                    <div class="col-lg-6 col-md-6">
+                        <p class="text-muted">Ingresando con sus credenciales se le mostrar&aacute;
+                            su informaci&oacute;n de cuenta y saldo.</p>
+                    </div>
+                </div>
+                <div class="row spaceuphalf">
+                    <div class="col-lg-12">
+                        <h4 class="titulocomprador" style="margin: 0;">Si a&uacute;n no tiene cuenta GM PAY puede registrarse</h4>
+                        <p class="text-muted">
+                            Las cuentas de GM PAY son gratuitas
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-8 col-md-8">
+                        <form method="POST" action="/registro" class="">
+                            {% if messages %}
+                                {% for message in messages %}
+                                    {% ifequal message.tags "error" %}
+                                        <div class="alert alert-danger">{{ message }}</div>
+                                    {% endifequal %}
+                                {% endfor %}
+                            {% endif %}
+                            {% csrf_token %}
+                            <input type="hidden" name="next" value="/{{ operacion.weburl }}"/>
+                            {{ formulario_registro.as_p }}
+                            <button class="btn btn-primary" type="submit">Registrarme</button>
+                        </form>
+                    </div>
+                </div>
+            {% else %}
+                <h4 class="titulocomprador">Mis Datos</h4>
+
+                <div class="row">
+                    <div class="col-lg-6 col-md-6">
+                        <div class="info">
+                            {{ cliente }}
+                        </div>
+                        <div class="saldodecuenta">Comprador</div>
+                    </div>
+                    <div class="col-lg-6 col-md-6">
+                        <div class="info">
+                            {{ cliente.tipoidentificacion }}: {{ cliente.identificacion }}
+                        </div>
+                        <div class="saldodecuenta">Identificaci&oacute;n</div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-12 col-md-12">
+                        <div class="info">
+                            {{ cliente.email }}
+                        </div>
+                        <div class="saldodecuenta">Correo Electr&oacute;nico</div>
+                    </div>
+                </div>
+
+                <h4 class="titulocomprador spaceuphalf">Pagar utilizando:</h4>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <table width="100%" class="infocuenta">
+                            <tbody>
+                            <tr>
+                                <td><input type="radio" checked/></td>
+                                <td width="40%"><img src="/static/img/topbarlogo.png"/> </td>
+                                <td>
+                                    <div class="info text-right {% if puede_pagar %}saldosuficiente{% else %}saldoinsuficiente{% endif %}">
+                                        ${{ cliente.saldo|floatformat:2|intcomma }}
+                                    </div>
+                                    <div class="saldodecuenta text-right">Saldo de Cuenta {% if not puede_pagar %}Insuficiente{% endif %}</div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                {% if puede_pagar %}
+                    <div class="row spaceuphalf">
+                        <form action="/{{ operacion.weburl }}" method="POST">
+                            {% csrf_token %}
+                            {% if redirect %}
+                                <input type="hidden" name="redirect" value="{{ redirect }}"/>
+                            {% endif %}
+                            <div class="col-lg-8 col-md-8">
+                                <label>Confirmar Clave</label><br/>
+                                <input type="password" name="clave" class="form-control"/>
+                            </div>
+                            <div class="col-lg-4 col-md-4">
+                                <label>&nbsp;</label><br/>
+                                <button type="submit" class="form-control btn btn-success"><i class="fa fa-check"></i> Pagar</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="row spaceuphalf">
+                        <div class="col-lg-8 col-md-8">
+                            <p class="text-muted">Para NO proceder al pago puede cancelarlo</p>
+                        </div>
+                        <div class="col-lg-4 col-md-4">
+                            <a href="{% if redirect %}{{ redirect }}?weburl={{ operacion.weburl }}&cancelado{% else %}/panel{% endif %}" id="cancelarpago" class="form-control btn btn-danger"><i class="fa fa-ban"></i> Cancelar</a>
+                        </div>
+                    </div>
+                {% endif %}
+
+                <div class="row spaceuphalf">
+                    <div class="col-lg-12">
+                        <a href="/logout?next={{ operacion.weburl }}">No es su cuenta? Cambiar de Usuario</a>
+                    </div>
+                </div>
+            {% endif %}
+
+        </div>
+    </div>
+
+{% endblock %}

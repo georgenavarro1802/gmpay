@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Online Payments">
+    <meta name="author" content="GM SOFT">
+
+    <title>pagacompa - Online Payments</title>
+
+    <link href="/static/img/favicon.ico" rel="shortcut icon"/>
+
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="/static/css/font-awesome.min.css" rel="stylesheet"/>
+    <link href="/static/css/misestilos.css" rel="stylesheet"/>
+
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/jquery.floats.js" type="application/javascript"></script>
+    <script src="/static/js/big.min.js" type="application/javascript"></script>
+
+    {% block heading %}
+    {% endblock %}
+
+</head>
+
+<body>
+
+<div id="wrap">
+    {% block navbar %}
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/"><img src="/static/img/apple-touch-icon-57.png" style="height: 25px;"/> GM SOFT</a>
+                </div>
+
+                <div class="navbar-collapse collapse">
+                    {% block panelusuario %}
+
+                        <form class="navbar-form navbar-right" action="/login" method="POST">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <input type="text" name="usuario" placeholder="Correo" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <input type="password" name="clave" placeholder="Clave" class="form-control">
+                            </div>
+                            <button type="submit" class="btn btn-success">Entrar</button>
+                        </form>
+
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="/olvido" class="btn btn-link">Olvid&eacute; mis credenciales</a></li>
+                        </ul>
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+
+    <!-- Begin page content -->
+    <div class="container">
+        {% block contenido %}
+            <div class="row">
+                <div class="col-lg-8 col-md-8" id="slogan">
+                    <div class="page-header">
+                        <h2>La forma m&aacute;s divertida de pagarle a los friends</h2>
+                    </div>
+                    <p class="lead" style="font-size: 17px">
+                        Compartir compras con los friends en Internet ya es posible.
+                        Paga productos y servicios o realiza transferencias a trav&eacute;s de Internet, Correo o Twitter.</p>
+                    <br/>
+                    <br/>
+                    <img src="/static/img/logo1.jpg"/>
+                </div>
+                <div class="col-lg-4 col-md-4">
+                    <form method="POST" action="/registro" class="well-sm well spaceupbig">
+                        {% if messages %}
+                            {% for message in messages %}
+                                {% ifequal message.tags "error" %}
+                                    <div class="alert alert-danger">{{ message }}</div>
+                                {% endifequal %}
+                            {% endfor %}
+                        {% endif %}
+                        <h3>Registro</h3>
+                        {% csrf_token %}
+                        {{ formulario_registro.as_p }}
+                        <button class="btn btn-lg btn-primary" type="submit">Registrarme</button>
+                    </form>
+                </div>
+            </div>
+
+        {% endblock %}
+
+    </div>
+</div>
+
+<div id="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-8 text-center">
+                <p class="text-muted credit">GMPAY is a demo service app <a href="http://twitter.com/aokgeorge"><i class="fa fa-twitter-square"></i> GM SOFT</a>.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

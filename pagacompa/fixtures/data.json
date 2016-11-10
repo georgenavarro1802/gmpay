@@ -1,0 +1,361 @@
+[
+  {
+    "pk": 1,
+    "model": "pay.tipoidentificacion",
+    "fields": {"nombre": "CEDULA"
+    }
+  },
+  {
+    "pk": 2,
+    "model": "pay.tipoidentificacion",
+    "fields": {
+      "nombre": "PASAPORTE"
+    }
+  },
+  {
+    "pk": 3,
+    "model": "pay.tipoidentificacion",
+    "fields": {
+      "nombre": "RUC"
+    }
+  },
+  {
+    "pk": 1,
+    "model": "pay.operacion",
+    "fields": {
+      "descripcion": "Pago Contenido Digital",
+      "fecha": "2013-11-26T00:09:14.844",
+      "weburl": "4b56afc484",
+      "cliente": 3,
+      "valor": "2.99"
+    }
+  },
+  {
+    "pk": 2,
+    "model": "pay.operacion",
+    "fields": {
+      "descripcion": "Pago Subscripcion Digital",
+      "fecha": "2013-11-26T00:09:14.304",
+      "weburl": "127fa7e175",
+      "cliente": 3,
+      "valor": "20.00"
+    }
+  },
+  {
+    "pk": 3,
+    "model": "pay.operacion",
+    "fields": {
+      "descripcion": "Fotografia Digital",
+      "fecha": "2013-11-26T00:09:14.844",
+      "weburl": "d2ea4caf42",
+      "cliente": 5,
+      "valor": "5.00"
+    }
+  },
+  {
+    "pk": 4,
+    "model": "pay.operacion",
+    "fields": {
+      "descripcion": "Reunion el viernes",
+      "fecha": "2013-11-26T00:55:26.814",
+      "weburl": "759b73ee56",
+      "cliente": 3,
+      "valor": "3.00"
+    }
+  },
+  {
+    "pk": 5,
+    "model": "pay.operacion",
+    "fields": {
+      "descripcion": "Compras de tienda",
+      "fecha": "2013-11-26T00:55:26.126",
+      "weburl": "381e3a038a",
+      "cliente": 2,
+      "valor": "2.00"
+    }
+  },
+  {
+    "pk": 6,
+    "model": "pay.operacion",
+    "fields": {
+      "descripcion": "Recarga de Celular",
+      "fecha": "2013-11-26T00:55:26.814",
+      "weburl": "c780cbf6d9",
+      "cliente": 3,
+      "valor": "5.00"
+    }
+  },
+  {
+    "pk": 7,
+    "model": "pay.operacion",
+    "fields": {
+      "descripcion": "Pago de luz y agua",
+      "fecha": "2013-11-26T00:55:26.126",
+      "weburl": "3308152c42",
+      "cliente": 2,
+      "valor": "2.00"
+    }
+  },
+  {
+    "pk": 8,
+    "model": "pay.operacion",
+    "fields": {
+      "descripcion": "Fiesta del sabado",
+      "fecha": "2013-11-26T00:55:26.814",
+      "weburl": "3c7bc4a31e",
+      "cliente": 5,
+      "valor": "10.00"
+    }
+  },
+  {
+    "pk": 9,
+    "model": "pay.operacion",
+    "fields": {
+      "descripcion": "Prueba de pago",
+      "fecha": "2013-11-28T07:47:21.540",
+      "weburl": "6ab9213aeb",
+      "cliente": 4,
+      "valor": "10.00"
+    }
+  },
+  {
+    "pk": 10,
+    "model": "pay.operacion",
+    "fields": {
+      "descripcion": "Curso de Contabilidad",
+      "fecha": "2014-01-10T14:47:37.413",
+      "weburl": "a2b11fef0c",
+      "cliente": 4,
+      "valor": "80.00"
+    }
+  },
+  {
+    "pk": 1,
+    "model": "pay.pago",
+    "fields": {
+      "pagado": "2.74",
+      "fecha": "2013-11-26T00:09:14.305",
+      "comprador": 5,
+      "operacion": 1
+    }
+  },
+  {
+    "pk": 2,
+    "model": "pay.pago",
+    "fields": {
+      "pagado": "4.75",
+      "fecha": "2013-11-26T00:55:26.126",
+      "comprador": 4,
+      "operacion": 6
+    }
+  },
+  {
+    "pk": 3,
+    "model": "pay.pago",
+    "fields": {
+      "pagado": "9.75",
+      "fecha": "2013-11-26T00:55:26.815",
+      "comprador": 3,
+      "operacion": 8
+    }
+  },
+  {
+    "pk": 1,
+    "model": "pay.deposito",
+    "fields": {
+      "fecha": "2013-11-26T00:09:14.305",
+      "cliente": 3,
+      "motivo": "COMISION PAGO #1",
+      "valor": "0.25"
+    }
+  },
+  {
+    "pk": 2,
+    "model": "pay.deposito",
+    "fields": {
+      "fecha": "2013-11-26T00:55:26.127",
+      "cliente": 3,
+      "motivo": "COMISION PAGO #2",
+      "valor": "0.25"
+    }
+  },
+  {
+    "pk": 3,
+    "model": "pay.deposito",
+    "fields": {
+      "fecha": "2013-11-26T00:55:26.816",
+      "cliente": 3,
+      "motivo": "COMISION PAGO #3",
+      "valor": "0.25"
+    }
+  },
+  {
+    "pk": 1,
+    "model": "pay.apikey",
+    "fields": {
+      "cliente": 1,
+      "key": "d0b3027068b6ad48012e60112309e96cbd458c20"
+    }
+  },
+  {
+    "pk": 2,
+    "model": "pay.apikey",
+    "fields": {
+      "cliente": 5,
+      "key": "07c7a19f50d466a3f1d15e223e2b0336472c736a"
+    }
+  },
+  {
+    "pk": 3,
+    "model": "pay.apikey",
+    "fields": {
+      "cliente": 3,
+      "key": "8375be9008e0b2f41381442c596847caabbc79be"
+    }
+  },
+  {
+    "pk": 1,
+    "model": "auth.user",
+    "fields": {
+      "username": "george",
+      "first_name": "George",
+      "last_name": "Navarro",
+      "is_active": true,
+      "is_superuser": true,
+      "is_staff": true,
+      "last_login": "2015-03-13T14:06:45.032",
+      "groups": [],
+      "user_permissions": [],
+      "password": "123",
+      "email": "gnavarrog1802@gmail.com",
+      "date_joined": "2016-11-07T19:47:19"
+    }
+  },
+  {
+    "pk": 2,
+    "model": "auth.user",
+    "fields": {
+      "username": "mcpons",
+      "first_name": "Maria",
+      "last_name": "Pons",
+      "is_active": true,
+      "is_superuser": false,
+      "is_staff": false,
+      "last_login": "2016-11-01T12:57:54.420",
+      "groups": [],
+      "user_permissions": [],
+      "password": "123",
+      "email": "mcpons@hotmail.es",
+      "date_joined": "2016-11-10T20:03:14.693"
+    }
+  },
+  {
+    "pk": 3,
+    "model": "auth.user",
+    "fields": {
+      "username": "jordy",
+      "first_name": "Jordano",
+      "last_name": "Navarro",
+      "is_active": true,
+      "is_superuser": false,
+      "is_staff": false,
+      "last_login": "2016-11-10T20:32:40.868",
+      "groups": [],
+      "user_permissions": [],
+      "password": "123",
+      "email": "jordy@gmail.com",
+      "date_joined": "2016-10-21T20:32:40.746"
+    }
+  },
+  {
+    "pk": 4,
+    "model": "auth.user",
+    "fields": {
+      "username": "diana",
+      "first_name": "Diana",
+      "last_name": "Pena",
+      "is_active": true,
+      "is_superuser": false,
+      "is_staff": false,
+      "last_login": "2016-10-20T23:54:24.143",
+      "groups": [],
+      "user_permissions": [],
+      "password": "123",
+      "email": "diana@aol.com",
+      "date_joined": "2016-11-25T23:54:24.007"
+    }
+  },
+  {
+    "pk": 5,
+    "model": "auth.user",
+    "fields": {
+      "username": "william",
+      "first_name": "William",
+      "last_name": "Pena",
+      "is_active": true,
+      "is_superuser": false,
+      "is_staff": false,
+      "last_login": "2016-09-26T01:13:21.649",
+      "groups": [],
+      "user_permissions": [],
+      "password": "123",
+      "email": "willy@aol.com",
+      "date_joined": "2016-12-20T00:17:16.300"
+    }
+  },
+  {
+    "pk": 1,
+    "model": "pay.cliente",
+    "fields": {
+      "identificacion": "1751106087",
+      "saldo": "10.00",
+      "tipoidentificacion": 1,
+      "vendedor": "000001",
+      "usuario": 1
+    }
+  },
+  {
+    "pk": 2,
+    "model": "pay.cliente",
+    "fields": {
+      "identificacion": "1751106823",
+      "saldo": "10.00",
+      "tipoidentificacion": 2,
+      "vendedor": "000002",
+      "usuario": 2
+    }
+  },
+  {
+    "pk": 3,
+    "model": "pay.cliente",
+    "fields": {
+      "identificacion": "0632262587",
+      "saldo": "8.24",
+      "tipoidentificacion": 2,
+      "vendedor": "000003",
+      "usuario": 3
+    }
+  },
+  {
+    "pk": 4,
+    "model": "pay.cliente",
+    "fields": {
+      "identificacion": "7863662514",
+      "saldo": "10.00",
+      "tipoidentificacion": 1,
+      "vendedor": "000004",
+      "usuario": 4
+    }
+  },
+  {
+    "pk": 5,
+    "model": "pay.cliente",
+    "fields": {
+      "identificacion": "1425369878",
+      "saldo": "7.01",
+      "tipoidentificacion": 2,
+      "vendedor": "000005",
+      "usuario": 5
+    }
+  }
+]

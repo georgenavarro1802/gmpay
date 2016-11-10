@@ -1,0 +1,128 @@
+/* Sticky footer styles
+-------------------------------------------------- */
+
+html,
+body {
+  height: 100%;
+  /* The html and body elements cannot have any padding or margin. */
+
+}
+body.portada { background-image: url(/static/img/fondo.jpg); background-size: cover; }
+
+/* Wrapper for page content to push down footer */
+#wrap {
+  min-height: 100%;
+  height: auto;
+  /* Negative indent footer by its height */
+  margin: 0 auto -60px;
+  /* Pad bottom by footer height */
+  padding: 0 0 60px;
+}
+
+/* Set the fixed height of the footer here */
+#footer {
+  height: 60px;
+  background-color: #f5f5f5;
+}
+
+
+/* Custom page CSS
+-------------------------------------------------- */
+/* Not required for template or sticky footer method. */
+
+#wrap > .container {
+  padding: 60px 15px 0;
+}
+.container .credit {
+  margin: 20px 0;
+}
+
+#footer > .container {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+code {
+  font-size: 80%;
+}
+
+.spaceupbig { margin-top: 50px;}
+.spaceuphalf { margin-top: 20px;}
+#slogan h1 { font-size: 65px;}
+
+
+.form-signin {
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+}
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+  margin-bottom: 10px;
+}
+.form-signin .checkbox {
+  font-weight: normal;
+}
+.form-signin .form-control {
+  position: relative;
+  font-size: 16px;
+  height: auto;
+  padding: 10px;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+.form-signin input[type="text"] {
+  margin-bottom: -1px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.saldo  { font-size: 30px; border-bottom: dashed 1px #888; color: green;   }
+.info  { font-size: 20px; border-bottom: dashed 1px #888; color: black;   }
+.infocuenta img { width: 100%; }
+
+.infocuenta .info {font-size: 30px; border-bottom: dashed 1px #888; color: black;  }
+
+.areaderecha h2 { margin: 0; margin-bottom: 10px;}
+.codigoenlace { font-size: 16px; font-family: monospace; background: #fffbe8; }
+.saldodecuenta { font-size: 12px; color: #888; }
+table { font-size: 12px; }
+.crearenlace h3 { margin: 0;}
+.navbar-nav > li > a.clearpadding { padding-top: 5px; padding-bottom: 5px; padding-right: 0; }
+.tiposseguridad img { width: 60px; float: left; margin-right: 20px;}
+.sencillono h4 { margin: 0;}
+
+.piedefirma img { width: 65px; float: left; margin-right: 10px;}
+.piedefirma .nombre { font-size: 16px; font-weight: bold;}
+.piedefirma .titulo { font-size: 14px; color: #888; }
+.tecnologias img { width: 100%;}
+.tarifa { font-size: 80px; font-weight: bold; line-height: 80px; margin: 0;}
+#qrcode img { width: 100%;}
+#infopago { }
+#resumenpago { font-size: 16px;}
+#resumenpago tfoot { background: #f0f0f0;}
+.titulovendedor { padding: 4px 0; text-align: right; }
+.titulocomprador { padding: 4px 0;}
+.titulocomprador i { color: red;}
+.titulovendedor i { color: green;}
+.comprobante { border: solid 1px #999;}
+.infocuenta .info.saldoinsuficiente { color: red; }
+.infocuenta .info.saldosuficiente { color: green; }
+.apikey { font-size: 16px; color: green;}
+table.metodosapi { }
+table.metodosapi h4 { margin: 0;}
+.patrocinios img {
+    padding-top: 10px;
+    height: 40px;
+    margin-left: 10px;
+}
+.patrocinadores img {  }

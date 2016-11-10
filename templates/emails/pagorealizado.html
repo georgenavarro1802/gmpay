@@ -1,0 +1,9 @@
+{% load humanize %}
+<h3>Has realizado un pago en GM PAY</h3>
+<br/>
+<p>Nombre: <b>{{ pago.operacion.cliente.full_name }}</b><br/>
+   Identificacion: <b>{{ pago.operacion.cliente.tipoidentificacion.nombre }}: {{ pago.operacion.cliente.identificacion }}</b><br/>
+   <br/>
+   Descripcion: <b>{{ pago.operacion.descripcion }}</b><br/>
+   Pagado: <b>$ {{ pago.operacion.valor|floatformat:2|intcomma }}</b>
+</p>
